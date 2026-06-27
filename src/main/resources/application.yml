@@ -7,3 +7,6 @@ spring:
         username: root
         password: 123456
       # 从库数据源
+jwt:
+  secret: abcdefghijklmnopqrstuvwxyzqwerty
+  expire: 86400000

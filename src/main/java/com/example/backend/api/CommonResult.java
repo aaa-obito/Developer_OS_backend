@@ -1,5 +1,10 @@
 package com.example.backend.api;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class CommonResult<T> {
     private long code;
     private String message;
@@ -34,27 +39,4 @@ public class CommonResult<T> {
         return failed(ResultCode.FAILED);
     }
 
-    public long getCode() {
-        return code;
-    }
-
-    public void setCode(long code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }
