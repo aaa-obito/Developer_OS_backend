@@ -1,5 +1,7 @@
 package com.example.backend.service;
 
+import com.example.backend.domain.dto.other.LoginDTO;
+import com.example.backend.domain.dto.other.RegisterDTO;
 import com.example.backend.domain.entity.SysUser;
 import com.example.backend.domain.dto.create.SysUserCreate;
 import com.example.backend.domain.dto.query.PageQuery;
@@ -15,4 +17,10 @@ public interface SysUserService extends IService<SysUser> {
     boolean add(SysUserCreate createParam);
 
     boolean updateSysUser(SysUserUpdate updateParam);
+
+    boolean register(RegisterDTO registerDTO);
+
+    String login(LoginDTO loginDTO);
+
+    void logout();
 }

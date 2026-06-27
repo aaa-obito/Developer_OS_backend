@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @Schema(description = "用户表")
 public class SysUser extends BaseEntity implements Serializable {
 
@@ -39,21 +41,5 @@ private static final long serialVersionUID = 1L;
 
         @Schema(description = "状态：0禁用，1正常")
         private Integer status;
-
-        @Schema(description = "创建者ID")
-        private Long createBy;
-
-        @Schema(description = "更新者ID")
-        private Long updateBy;
-
-        @Schema(description = "创建时间")
-        private Date createTime;
-
-        @Schema(description = "更新时间")
-        private Date updateTime;
-
-        @Schema(description = "删除标志：0未删除，1已删除")
-        @TableLogic
-        private Integer delFlag;
 
 }

@@ -1,5 +1,8 @@
 package com.example.backend.controller;
 
+import com.example.backend.config.UserContext;
+import com.example.backend.domain.dto.other.LoginDTO;
+import com.example.backend.domain.dto.other.RegisterDTO;
 import com.example.backend.domain.entity.SysUser;
 import com.example.backend.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -14,7 +17,9 @@ import com.example.backend.mapping.SysUserMapping;
 import com.example.backend.utils.TableInfo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +33,28 @@ public class SysUserController {
 
     @Autowired
     private SysUserService sysUserService;
+
+    @PostMapping("/register")
+    @Operation(summary = "注册")
+    public CommonResult register(@RequestBody @Validated RegisterDTO registerDTO){
+        boolean isSuccess = sysUserService.register(registerDTO);
+        return isSuccess ? CommonResult.success(null) : CommonResult.failed();
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "登录")
+    public CommonResult login(@RequestBody @Validated LoginDTO loginDTO){
+        String token = sysUserService.login(loginDTO);
+        return CommonResult.success(token);
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "登出")
+    public CommonResult logout(){
+        sysUserService.logout();
+        return CommonResult.success(null);
+    }
+
 
     /**
     * 分页查询列表

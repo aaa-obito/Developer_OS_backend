@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @Data
 @Schema(description = "学习记录表")
-public class LearningRecord extends BaseEntity implements Serializable {
+public class LearningRecord extends BaseEntity implements Serializable{
 
 private static final long serialVersionUID = 1L;
 
@@ -42,21 +42,5 @@ private static final long serialVersionUID = 1L;
 
         @Schema(description = "学习日期")
         private Date studyDate;
-
-        @Schema(description = "创建者ID")
-        private Long createBy;
-
-        @Schema(description = "更新者ID")
-        private Long updateBy;
-
-        @Schema(description = "创建时间")
-        private Date createTime;
-
-        @Schema(description = "更新时间")
-        private Date updateTime;
-
-        @Schema(description = "删除标志：0未删除，1已删除")
-        @TableLogic
-        private Integer delFlag;
 
 }
