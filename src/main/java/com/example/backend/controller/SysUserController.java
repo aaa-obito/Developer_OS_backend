@@ -18,6 +18,7 @@ import com.example.backend.utils.TableInfo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -61,7 +62,7 @@ public class SysUserController {
     */
     @GetMapping("/list")
     @Operation(summary = "查询用户表列表")
-    public TableInfo queryList(PageQuery query) {
+    public TableInfo queryList(@ParameterObject PageQuery query) {
     PageInfo<SysUserVo> pageInfo = sysUserService.queryList(query);
         return TableInfo.success(pageInfo.getList(), pageInfo.getTotal());
         }

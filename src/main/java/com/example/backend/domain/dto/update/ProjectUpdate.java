@@ -1,6 +1,8 @@
 package com.example.backend.domain.dto.update;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,20 +14,16 @@ public class ProjectUpdate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull(message = "项目ID不能为空")
+    @Min(value = 1,message = "项目ID至少为1")
     @Schema(description = "项目ID")
     private Long id;
-
-    @Schema(description = "用户ID")
-    private Long userId;
 
     @Schema(description = "项目名称")
     private String name;
 
     @Schema(description = "项目描述")
     private String description;
-
-    @Schema(description = "项目状态：0计划中，1开发中，2已完成，3暂停")
-    private Integer status;
 
     @Schema(description = "开始日期")
     private Date startDate;

@@ -14,6 +14,7 @@ import com.example.backend.mapping.ProjectFeatureMapping;
 import com.example.backend.utils.TableInfo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class ProjectFeatureController {
     */
     @GetMapping("/list")
     @Operation(summary = "查询项目功能表列表")
-    public TableInfo queryList(PageQuery query) {
+    public TableInfo queryList(@ParameterObject PageQuery query) {
     PageInfo<ProjectFeatureVo> pageInfo = projectFeatureService.queryList(query);
         return TableInfo.success(pageInfo.getList(), pageInfo.getTotal());
         }

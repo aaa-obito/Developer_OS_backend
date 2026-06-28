@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.domain.dto.other.ProjectStatusDTO;
 import com.example.backend.domain.entity.Project;
 import com.example.backend.domain.dto.create.ProjectCreate;
 import com.example.backend.domain.dto.query.PageQuery;
@@ -15,4 +16,6 @@ public interface ProjectService extends IService<Project> {
     boolean add(ProjectCreate createParam);
 
     boolean updateProject(ProjectUpdate updateParam);
+
+    boolean updateStatus(ProjectStatusDTO projectStatusDTO);
 }

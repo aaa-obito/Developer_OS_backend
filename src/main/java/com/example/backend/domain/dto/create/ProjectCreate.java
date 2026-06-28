@@ -1,6 +1,7 @@
 package com.example.backend.domain.dto.create;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,17 +13,12 @@ public class ProjectCreate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "用户ID")
-    private Long userId;
-
+    @Max(value = 10,message = "项目名称最大为10个字")
     @Schema(description = "项目名称")
     private String name;
 
     @Schema(description = "项目描述")
     private String description;
-
-    @Schema(description = "项目状态：0计划中，1开发中，2已完成，3暂停")
-    private Integer status;
 
     @Schema(description = "开始日期")
     private Date startDate;

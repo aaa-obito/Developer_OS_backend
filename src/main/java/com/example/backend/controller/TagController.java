@@ -14,6 +14,7 @@ import com.example.backend.mapping.TagMapping;
 import com.example.backend.utils.TableInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class TagController {
     */
     @GetMapping("/list")
     @Operation(summary = "查询标签表列表")
-    public TableInfo queryList(PageQuery query) {
+    public TableInfo queryList(@ParameterObject PageQuery query) {
     PageInfo<TagVo> pageInfo = tagService.queryList(query);
         return TableInfo.success(pageInfo.getList(), pageInfo.getTotal());
         }

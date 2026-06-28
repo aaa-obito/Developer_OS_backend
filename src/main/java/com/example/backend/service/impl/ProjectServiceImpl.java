@@ -1,6 +1,9 @@
 package com.example.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.example.backend.config.UserContext;
 import com.example.backend.constant.ReturnConstant;
+import com.example.backend.domain.dto.other.ProjectStatusDTO;
 import com.example.backend.domain.entity.Project;
 import com.example.backend.domain.dto.create.ProjectCreate;
 import com.example.backend.domain.dto.query.PageQuery;
@@ -13,16 +16,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements ProjectService {
 
-    @Autowired
-    private ProjectMapper projectMapper;
+    private final ProjectMapper projectMapper;
 
     @Override
     public PageInfo<ProjectVo> queryList(PageQuery query) {
@@ -35,13 +39,22 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     @Override
     public boolean add(ProjectCreate createParam) {
-        Project entity = ProjectMapping.INSTANCE.fromCreate(createParam);
-        return save(entity);
+        Project project = ProjectMapping.INSTANCE.fromCreate(createParam);
+        project.setUserId(UserContext.getUserId());
+        return save(project);
     }
 
     @Override
     public boolean updateProject(ProjectUpdate updateParam) {
         Project entity = ProjectMapping.INSTANCE.fromUpdate(updateParam);
         return updateById(entity);
+    }
+
+    @Override
+    public boolean updateStatus(ProjectStatusDTO projectStatusDTO) {
+        LambdaUpdateWrapper<Project> uw = new LambdaUpdateWrapper<>();
+        uw.eq(Project::getId,projectStatusDTO.getId())
+                .set(Project::getStatus,projectStatusDTO.getStatus());
+        return projectMapper.update(uw) > 0;
     }
 }

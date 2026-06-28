@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.domain.dto.other.ProjectStatusDTO;
 import com.example.backend.domain.entity.Project;
 import com.example.backend.service.ProjectService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -14,6 +15,7 @@ import com.example.backend.mapping.ProjectMapping;
 import com.example.backend.utils.TableInfo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,7 @@ public class ProjectController {
     */
     @GetMapping("/list")
     @Operation(summary = "查询项目表列表")
-    public TableInfo queryList(PageQuery query) {
+    public TableInfo queryList(@ParameterObject PageQuery query) {
     PageInfo<ProjectVo> pageInfo = projectService.queryList(query);
         return TableInfo.success(pageInfo.getList(), pageInfo.getTotal());
         }
@@ -44,7 +46,7 @@ public class ProjectController {
     */
     @GetMapping("/{id}")
     @Operation(summary = "查询项目表详情")
-    public CommonResult queryById(@PathVariable("id") Long id) {
+    public CommonResult queryById(@PathVariable Long id) {
     Project project = projectService.getById(id);
     ProjectVo vo = ProjectMapping.INSTANCE.to(project);
     return CommonResult.success(vo);
@@ -68,6 +70,16 @@ public class ProjectController {
     public CommonResult update(@RequestBody @Validated ProjectUpdate updateParam) {
     boolean b = projectService.updateProject(updateParam);
     return b ? CommonResult.success(null) : CommonResult.failed();
+    }
+
+    /**
+     * 修改项目状态
+     */
+    @PostMapping("/status")
+    @Operation(summary = "修改项目状态")
+    public CommonResult status(@RequestBody @Validated ProjectStatusDTO projectStatusDTO) {
+        boolean b = projectService.updateStatus(projectStatusDTO);
+        return b ? CommonResult.success(null) : CommonResult.failed();
     }
 
     /**
