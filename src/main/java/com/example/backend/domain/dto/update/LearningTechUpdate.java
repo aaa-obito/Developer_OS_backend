@@ -1,6 +1,10 @@
 package com.example.backend.domain.dto.update;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,12 +16,12 @@ public class LearningTechUpdate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull(message = "技术ID不能为空")
+    @Min(value = 1,message = "技术ID至少为1")
     @Schema(description = "技术ID")
     private Long id;
 
-    @Schema(description = "用户ID")
-    private Long userId;
-
+    @Size(max = 10,message = "技术名称最大为10个字")
     @Schema(description = "技术名称")
     private String name;
 

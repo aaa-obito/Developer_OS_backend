@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.domain.entity.LearningTech;
+import com.example.backend.exception.BusinessException;
 import com.example.backend.service.LearningTechService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.pagehelper.PageInfo;
@@ -45,8 +46,11 @@ public class LearningTechController {
     */
     @GetMapping("/{id}")
     @Operation(summary = "查询学习技术表详情")
-    public CommonResult queryById(@PathVariable("id") Long id) {
+    public CommonResult queryById(@PathVariable Long id) {
     LearningTech learningTech = learningTechService.getById(id);
+    if (learningTech == null){
+        throw new BusinessException("学习笔记不存在");
+    }
     LearningTechVo vo = LearningTechMapping.INSTANCE.to(learningTech);
     return CommonResult.success(vo);
     }

@@ -4,6 +4,7 @@ import com.example.backend.config.UserContext;
 import com.example.backend.domain.dto.other.LoginDTO;
 import com.example.backend.domain.dto.other.RegisterDTO;
 import com.example.backend.domain.entity.SysUser;
+import com.example.backend.exception.BusinessException;
 import com.example.backend.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.pagehelper.PageInfo;
@@ -74,6 +75,9 @@ public class SysUserController {
     @Operation(summary = "查询用户表详情")
     public CommonResult queryById(@PathVariable("id") Long id) {
     SysUser sysUser = sysUserService.getById(id);
+    if (sysUser == null){
+        throw new BusinessException("用户不存在");
+    }
     SysUserVo vo = SysUserMapping.INSTANCE.to(sysUser);
     return CommonResult.success(vo);
     }

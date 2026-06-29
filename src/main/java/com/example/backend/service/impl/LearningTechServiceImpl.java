@@ -1,5 +1,6 @@
 package com.example.backend.service.impl;
 
+import com.example.backend.config.UserContext;
 import com.example.backend.constant.ReturnConstant;
 import com.example.backend.domain.entity.LearningTech;
 import com.example.backend.domain.dto.create.LearningTechCreate;
@@ -36,12 +37,14 @@ public class LearningTechServiceImpl extends ServiceImpl<LearningTechMapper, Lea
     @Override
     public boolean add(LearningTechCreate createParam) {
         LearningTech entity = LearningTechMapping.INSTANCE.fromCreate(createParam);
+        entity.setUserId(UserContext.getUserId());
         return save(entity);
     }
 
     @Override
     public boolean updateLearningTech(LearningTechUpdate updateParam) {
         LearningTech entity = LearningTechMapping.INSTANCE.fromUpdate(updateParam);
+        entity.setUserId(UserContext.getUserId());
         return updateById(entity);
     }
 }
