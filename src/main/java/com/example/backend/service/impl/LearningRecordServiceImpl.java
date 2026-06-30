@@ -1,5 +1,6 @@
 package com.example.backend.service.impl;
 
+import com.example.backend.config.UserContext;
 import com.example.backend.constant.ReturnConstant;
 import com.example.backend.domain.entity.LearningRecord;
 import com.example.backend.domain.dto.create.LearningRecordCreate;
@@ -36,12 +37,14 @@ public class LearningRecordServiceImpl extends ServiceImpl<LearningRecordMapper,
     @Override
     public boolean add(LearningRecordCreate createParam) {
         LearningRecord entity = LearningRecordMapping.INSTANCE.fromCreate(createParam);
+        entity.setUserId(UserContext.getUserId());
         return save(entity);
     }
 
     @Override
     public boolean updateLearningRecord(LearningRecordUpdate updateParam) {
         LearningRecord entity = LearningRecordMapping.INSTANCE.fromUpdate(updateParam);
+        entity.setUserId(UserContext.getUserId());
         return updateById(entity);
     }
 }

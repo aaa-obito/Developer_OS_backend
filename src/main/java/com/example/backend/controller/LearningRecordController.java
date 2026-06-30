@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.domain.entity.LearningRecord;
+import com.example.backend.exception.BusinessException;
 import com.example.backend.service.LearningRecordService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.pagehelper.PageInfo;
@@ -45,8 +46,11 @@ public class LearningRecordController {
     */
     @GetMapping("/{id}")
     @Operation(summary = "查询学习记录表详情")
-    public CommonResult queryById(@PathVariable("id") Long id) {
+    public CommonResult queryById(@PathVariable Long id) {
     LearningRecord learningRecord = learningRecordService.getById(id);
+        if (learningRecord == null){
+            throw new BusinessException("学习记录不存在");
+        }
     LearningRecordVo vo = LearningRecordMapping.INSTANCE.to(learningRecord);
     return CommonResult.success(vo);
     }

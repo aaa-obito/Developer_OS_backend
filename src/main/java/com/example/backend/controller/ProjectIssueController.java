@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.domain.entity.ProjectIssue;
+import com.example.backend.exception.BusinessException;
 import com.example.backend.service.ProjectIssueService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.pagehelper.PageInfo;
@@ -45,8 +46,11 @@ public class ProjectIssueController {
     */
     @GetMapping("/{id}")
     @Operation(summary = "查询项目问题记录表详情")
-    public CommonResult queryById(@PathVariable("id") Long id) {
+    public CommonResult queryById(@PathVariable Long id) {
     ProjectIssue projectIssue = projectIssueService.getById(id);
+    if(projectIssue == null){
+        throw new BusinessException("项目问题记录表为空");
+    }
     ProjectIssueVo vo = ProjectIssueMapping.INSTANCE.to(projectIssue);
     return CommonResult.success(vo);
     }

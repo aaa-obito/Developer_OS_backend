@@ -1,5 +1,6 @@
 package com.example.backend.service.impl;
 
+import com.example.backend.config.UserContext;
 import com.example.backend.constant.ReturnConstant;
 import com.example.backend.domain.entity.Note;
 import com.example.backend.domain.dto.create.NoteCreate;
@@ -36,12 +37,14 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
     @Override
     public boolean add(NoteCreate createParam) {
         Note entity = NoteMapping.INSTANCE.fromCreate(createParam);
+        entity.setUserId(UserContext.getUserId());
         return save(entity);
     }
 
     @Override
     public boolean updateNote(NoteUpdate updateParam) {
         Note entity = NoteMapping.INSTANCE.fromUpdate(updateParam);
+        entity.setUserId(UserContext.getUserId());
         return updateById(entity);
     }
 }

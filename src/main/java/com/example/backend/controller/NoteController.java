@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.domain.entity.Note;
+import com.example.backend.exception.BusinessException;
 import com.example.backend.service.NoteService;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.github.pagehelper.PageInfo;
@@ -45,8 +46,11 @@ public class NoteController {
     */
     @GetMapping("/{id}")
     @Operation(summary = "查询技术笔记表详情")
-    public CommonResult queryById(@PathVariable("id") Long id) {
+    public CommonResult queryById(@PathVariable Long id) {
     Note note = noteService.getById(id);
+    if (note == null){
+        throw new BusinessException("技术笔记为空");
+    }
     NoteVo vo = NoteMapping.INSTANCE.to(note);
     return CommonResult.success(vo);
     }
